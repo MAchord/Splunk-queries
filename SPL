@@ -1,0 +1,2 @@
+Visualize all indexes available in your instance of Splunk, set your time for 1hr as the longer the time the more risk to the system.
+index=* | stats count by index
