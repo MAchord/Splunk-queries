@@ -1,5 +1,5 @@
 brute-force or password spraying activity
-index=box_win_security EventCode=4625
+index=* EventCode=4625
 | stats count as failed_attempts dc(Account_Name) as unique_users values(Account_Name) as users values(Logon_Type) as logon_types by src_ip dest
 | where failed_attempts >= 10
 | sort - failed_attempts
