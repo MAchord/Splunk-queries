@@ -1,3 +1,9 @@
+brute-force or password spraying activity
+index=box_win_security EventCode=4625
+| stats count as failed_attempts dc(Account_Name) as unique_users values(Account_Name) as users values(Logon_Type) as logon_types by src_ip dest
+| where failed_attempts >= 10
+| sort - failed_attempts
+
 This Query helps see browsers that spwan cmd lines.
 index=* 
 (process_name="cmd.exe" OR process_name="powershell.exe" OR process_name="pwsh.exe" OR process_name="bash" OR process_name="sh")
@@ -6,7 +12,7 @@ index=*
 | sort - _time
 
 Visualize hosts that have sent a large amount of data outbound in a few amount of questions.
-index=box sourcetype="zeek:conn:json" | stats sum(bytes_out) as bytes_out count by src_ip dest_ip | where bytes_out > 100000000 AND count < 10 | sort - bytes_out
+index=* sourcetype="zeek:conn:json" | stats sum(bytes_out) as bytes_out count by src_ip dest_ip | where bytes_out > 100000000 AND count < 10 | sort - bytes_out
 
 Visualize all indexes available in your instance of Splunk, set your time for 1hr as the longer the time the more risk to the system.
 index=* | stats count by index
