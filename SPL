@@ -1,3 +1,6 @@
+Search for werid portss inbound
+index=* src_port IN (111,222,333,555,666,777,888,999,1111,2222,3333,4444,5555,6666,7777,8888,11111,22222,33333,44444,55555) src_port=4444 sourcetype="zeek:http:json"
+
 brute-force or password spraying activity
 index=* EventCode=4625
 | stats count as failed_attempts dc(Account_Name) as unique_users values(Account_Name) as users values(Logon_Type) as logon_types by src_ip dest
