@@ -1,0 +1,53 @@
+Splunk Index Creation Methods
+Follow the steps to create an index using the Splunk Web interface.
+
+Navigate to https://<your-splunk-host>:8000. Log in with an admin-level account.
+
+From the top menu, select Settings, within the Data category, select Indexes.
+
+Select New Index.
+
+Configure the Index Settings:
+
+Index Name: Enter a unique name (e.g., navsec_security_events).
+
+App Context: Choose an app if applicable (default is search).
+
+Home Path: Leave as default (unless a specific storage location is required).
+
+Cold Path: Optional, for moving older data to secondary storage.
+
+Thawed Path: Optional, used for restoring archived data.
+
+Max Size (MB): Set storage limits if required.
+
+Data Retention: Set retention period (e.g., 30 days, 1 year).
+
+Enable Data Integrity Check: Optional, for compliance-focused deployments.
+
+Select Save.
+
+Follow the steps to create an index using configuration files.
+
+Navigate to the indexes Configuration File, using the following commands
+
+
+bash
+
+$SPLUNK_HOME/etc/apps/<your-app>/local/indexes.conf
+Open indexes.conf. NOTE: If it does not exist, create a new file named indexes.conf.
+
+Add the index definition, using the commands below:
+
+
+ini
+
+[navsec_security_events] homePath = $SPLUNK_DB/navsec_security_events/db coldPath = $SPLUNK_DB/navsec_security_events/colddb thawedPath = $SPLUNK_DB/navsec_security_events/thaweddb maxTotalDataSizeMB = 50000 frozenTimePeriodInSecs = 31536000  # 1 year
+Save the configuration.
+
+Restart Splunk to apply changes:
+
+
+bash
+
+./splunk restart
